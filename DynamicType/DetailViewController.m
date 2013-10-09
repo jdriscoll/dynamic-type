@@ -17,7 +17,6 @@
     self = [super init];
     if (self) {
         _style = style;
-        NSLog(@"TEST: %@", _style);
     }
 
     return self;
@@ -27,7 +26,7 @@
 {
     UIFont *font = [UIFont preferredFontForTextStyle:self.style];
     self.textView.font = font;
-    self.textView.text = [font description];
+    self.textView.text = [NSString stringWithFormat:@"%@\n\n%d", [font description], [font fontDescriptor].symbolicTraits];
     self.title = self.style;
 }
 

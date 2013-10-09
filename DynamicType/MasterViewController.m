@@ -12,14 +12,11 @@
 
 @implementation MasterViewController
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.title = [[UIApplication sharedApplication] preferredContentSizeCategory];
 
     _styles = [NSMutableArray arrayWithCapacity:6];
     [_styles addObject:UIFontTextStyleHeadline];
@@ -35,6 +32,14 @@
                                                       object:nil
                                                        queue:[NSOperationQueue mainQueue]
                                                   usingBlock:^(NSNotification *note) {
+                                                      self.title = note.userInfo[UIContentSizeCategoryNewValueKey];
+                                                      NSString *msg = [NSString stringWithFormat:@"Size is now %@", note.userInfo[UIContentSizeCategoryNewValueKey]];
+                                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                                                      message:msg
+                                                                                                     delegate:nil
+                                                                                            cancelButtonTitle:@"Dismiss"
+                                                                                            otherButtonTitles:nil];
+                                                      [alert show];
                                                       [self_.tableView reloadData];
                                                   }];
 }
